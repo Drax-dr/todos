@@ -23,4 +23,4 @@ COPY --from=builder /app/backend /backend
 EXPOSE 8080
 
 # Command to run the Go app
-CMD ["/backend"]
+CMD ["./backend"]
