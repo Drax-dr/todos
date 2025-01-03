@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000" # Exposes the frontend to port 80 on localhost
+    networks:
+      - caddy_network
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8080:8080" # Exposes the backend to port 8080
+    networks:
+      - caddy_network
+
+  caddy:
+    image: caddy:latest
+    container_name: caddy
+    ports:
+      - "80:80" # HTTP port
+      - "443:443" # HTTPS port
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+    networks:
+      - caddy_network
+    restart: always
+
+networks:
+  caddy_network:
+    driver: bridge
